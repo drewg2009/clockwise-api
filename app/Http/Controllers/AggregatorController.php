@@ -12,7 +12,9 @@ class AggregatorController extends Controller
     {
     }
 
-    public function executeAll(){
+    public function executeAll(Request $request){
+
+        dd($request->moduleInfo);
 
         $quoteController = new QuoteController();
         $redditController = new RedditController();
