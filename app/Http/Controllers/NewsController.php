@@ -13,13 +13,13 @@ class NewsController extends Controller implements ModuleInterface
     {
         $this->linksArray = array(
 
-            "Top" => "https://news.google.com/news?cf=all&hl=en&pz=1&ned=us&output=rss",
-            "Sports" => "https://news.google.com/news?cf=all&hl=en&pz=1&ned=us&topic=s&output=rss",
-            "Business" => "https://news.google.com/news?cf=all&hl=en&pz=1&ned=us&topic=b&output=rss",
-            "Technology" => "https://news.google.com/news?cf=all&hl=en&pz=1&ned=us&topic=tc&output=rss",
-            "Science" => "https://news.google.com/news?cf=all&hl=en&pz=1&ned=us&topic=snc&output=rss",
-            "Health" => "http://news.google.com/news?cf=all&hl=en&pz=1&ned=us&topic=m&output=rss",
-            "Elections" => "https://news.google.com/news?cf=all&hl=en&pz=1&ned=us&topic=tc&output=rss"
+            "top" => "https://news.google.com/news?cf=all&hl=en&pz=1&ned=us&output=rss",
+            "sports" => "https://news.google.com/news?cf=all&hl=en&pz=1&ned=us&topic=s&output=rss",
+            "business" => "https://news.google.com/news?cf=all&hl=en&pz=1&ned=us&topic=b&output=rss",
+            "technology" => "https://news.google.com/news?cf=all&hl=en&pz=1&ned=us&topic=tc&output=rss",
+            "science" => "https://news.google.com/news?cf=all&hl=en&pz=1&ned=us&topic=snc&output=rss",
+            "health" => "http://news.google.com/news?cf=all&hl=en&pz=1&ned=us&topic=m&output=rss",
+            "elections" => "https://news.google.com/news?cf=all&hl=en&pz=1&ned=us&topic=tc&output=rss"
 
         );
 
