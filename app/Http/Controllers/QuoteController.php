@@ -11,6 +11,6 @@ class QuoteController extends Controller implements ModuleInterface
 
     public function execute($name, $limit, $message){
         $xmlObject = XMLParserController::get_rss_item($this->url, 1);
-        return $message . $xmlObject[0]->description;
+        return strip_tags($message . $xmlObject[0]->description);
     }
 }
