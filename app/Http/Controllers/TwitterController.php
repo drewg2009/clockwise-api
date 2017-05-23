@@ -14,7 +14,7 @@ class TwitterController extends Controller implements ModuleInterface
         if (sizeof($twitterContent) > 0) {
             $string = $message . $name . ": " . $this->getString($twitterContent);
         } else {
-            $string = "Could not retrieve posts for the " . $name . "username. ";
+            $string = "Could not retrieve posts for the " . $name . " username";
         }
         return $string;
     }
@@ -39,11 +39,13 @@ class TwitterController extends Controller implements ModuleInterface
         $stringArray = explode(" ", $url);
         $newString = "";
         foreach ($stringArray as $string) {
-            if (strpos($string, "http://") === false && strpos($string, "https://") === false) {
-                if(strpos($string, "#") !== false){
-                    $newString .= str_replace("#","", $string) . " ";
-                }
-                else{
+            if (strpos($string, "http://") === false && strpos($string, "https://") === false
+                && strpos($string, "@") === false
+            ) {
+
+                if (strpos($string, "#") !== false) {
+                    $newString .= str_replace("#", "", $string) . " ";
+                } else {
                     $newString .= $string . " ";
                 }
             }

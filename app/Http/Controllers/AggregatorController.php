@@ -40,7 +40,7 @@ class AggregatorController extends Controller
                 case "fact":
                     if ($value) {
                         $twitterController = new TwitterController();
-                        $this->finalString .= $twitterController->execute("OddFunFacts", 1, "Here is the fun fact of the day from ") . ". ";
+                        $this->finalString .= $twitterController->execute("CrazyWowFacts", 1, "Here is the fun fact of the day from ") . ". ";
                     }
                     break;
                 case "news":
@@ -79,6 +79,7 @@ class AggregatorController extends Controller
                         $this->finalString .= $trafficController->execute($subModule->name, null, "Traffic: It will ");
                     }
                     break;
+
                 default:
                     break;
             }
@@ -92,7 +93,6 @@ class AggregatorController extends Controller
 //        $trafficController = new TrafficController("kent oh 44240", "columbus ohio", "driving");
 //
 //
-//        $this->finalString .= $twitterController->execute("epochSoftware",5, "Here are the top posts from ") . ". ";
 //        $this->finalString .= $redditController->execute("sports",3, "Here are the top reddit posts from ") . ". ";
 //        $this->finalString .= $history->execute(null, null, "Here is what happened on this day in history: ");
 //        //$this->finalString .= $weather->execute(null, null, "Weather:Here is the weather for the area: ");
