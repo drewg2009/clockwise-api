@@ -30,44 +30,44 @@ class AggregatorController extends Controller
                     }
                     break;
                 case "quote":
-                    if($value){
+                    if ($value) {
                         $quoteController = new QuoteController();
-                         $this->finalString .= $quoteController->execute(null, null, "Here is the quote of the day. ") . ". ";
+                        $this->finalString .= $quoteController->execute(null, null, "Here is the quote of the day. ") . ". ";
 
                     }
                     break;
 
                 case "fact":
-                    if($value){
+                    if ($value) {
                         $twitterController = new TwitterController();
-                        $this->finalString .= $twitterController->execute("OddFunFacts",1, "Here is the fun fact of the day from ") . ". ";
+                        $this->finalString .= $twitterController->execute("OddFunFacts", 1, "Here is the fun fact of the day from ") . ". ";
                     }
                     break;
                 case "news":
-                    foreach($value as $subModule){
-                      $newsController = new NewsController();
-                      $this->finalString .= $newsController->execute($subModule->category, $subModule->amount, "Here are the top news stories from ");
+                    foreach ($value as $subModule) {
+                        $newsController = new NewsController();
+                        $this->finalString .= $newsController->execute($subModule->category, $subModule->amount, "Here are the top news stories from ");
                     }
                     break;
                 case "twitter":
 
                     break;
                 case "reddit":
-                    foreach($value as $subModule){
+                    foreach ($value as $subModule) {
                         $redditController = new RedditController();
                         $this->finalString .= $redditController->execute($subModule->subreddit, $subModule->amount, "Here are the top reddit posts from ");
                     }
                     break;
                 case "countdown":
-                    foreach($value as $subModule){
+                    foreach ($value as $subModule) {
                         $countdownController = new CountdownController($subModule->date);
                         $this->finalString .= $countdownController->execute($subModule->event, null, "Countdown: ");
                     }
                     break;
                 case "reminders":
-                    foreach($value as $subModule){
+                    foreach ($value as $subModule) {
                         $remindersController = new RemindersController($subModule->list);
-                        $this->finalString .= $remindersController->execute($subModule->name, null, "Reminders:Here are your ");
+                        $this->finalString .= $remindersController->execute($subModule->name, null, "Reminders: Here are your ");
                     }
                     break;
                 default:

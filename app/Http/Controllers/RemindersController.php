@@ -16,18 +16,20 @@ class RemindersController extends Controller implements ModuleInterface
 
     public function execute($name, $limit, $message){
 
-        return $message . $name . " reminders. " . $this->getString();
+        return $message . $name . " reminders: " . $this->getString();
     }
 
     private function getString(){
         $string ="";
         $count = 0;
         $size = sizeof($this->remindersList);
-        foreach($this->remindersList as $number => $item){
-            if($size == 1) $string = $item . ". ";
+        foreach($this->remindersList as $item){
+            if($size == 1){
+                $string .= $item . ". ";
+            }
             else{
                 if($count == $size - 1){
-                    $string = " and " . $item . ". ";
+                    $string .= " and " . $item . ". ";
                 }
                 else{
                     $string .= $item . ", ";
