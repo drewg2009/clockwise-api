@@ -70,6 +70,9 @@ class AggregatorController extends Controller
                         $this->finalString .= $remindersController->execute($subModule->name, null, "Reminders: Here are your ");
                     }
                     break;
+                case "traffic":
+
+                    break;
                 default:
                     break;
             }
