@@ -2,42 +2,62 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 class TrafficController extends Controller implements ModuleInterface
 {
     private $url;
     private $apiKey = "AIzaSyDTr4kNRhwbVgi7NFlNstgnuOUxcVFC3gs";
-    private $origins;
-    private $destinations;
+    private $origin;
+    private $destination;
     private $mode;
+    private $tripName;
+    private $lat;
+    private $lon;
 
-    public function __construct($origins, $destinations, $mode)
+    public function __construct($lat, $lon, $moduleInfo)
     {
-        $this->origins = $origins;
-        $this->destinations = $destinations;
-        $this->mode = $mode;
+        $this->origin = $moduleInfo->startUrl;
+        $this->destination = $moduleInfo->destUrl;
+        $this->mode = $moduleInfo->mode;
+        $this->tripName = $moduleInfo->name;
+        $this->lat = $lat;
+        $this->lon = $lon;
     }
 
     public function execute($name, $limit, $message)
     {
+        $useLatLon = $this->origin == null ? true : false;
+
         $this->url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" .
-            $this->formatLocationString($this->origins)
-            . "&destinations=" . $this->formatLocationString($this->destinations) . "&mode=" . $this->mode .  "&key=" . $this->apiKey;
+            $this->formatLocationString($this->origin, $useLatLon)
+            . "&destinations=" . $this->formatLocationString($this->destination, false) . "&mode=" . $this->mode . "&key=" . $this->apiKey;
         $content = file_get_contents($this->url);
         $decodedContent = json_decode($content);
 
-        return $message . $decodedContent->rows[0]->elements[0]->duration->text . " to travel from "
-            . $this->origins . " to " . $this->destinations . " by " . $this->mode . ".";
+        $string = "";
+        if($useLatLon){
+            $string ="";
+        }
+        else{
+            $string = $message . $decodedContent->rows[0]->elements[0]->duration->text . " to travel fr"
+            . $this->origin . " to " . $this->destination . " by " . $this->mode . ".";
+        }
+        return $string;
 
     }
 
-    private function formatLocationString($string){
-        $array = explode(" ", $string);
+    private function formatLocationString($string, $useLatLon)
+    {
         $newString = "";
-        for($i = 0; $i < sizeof($array); $i++){
-            if($i == sizeof($array) - 1) $newString .= $array[$i];
-            else $newString .= $array[$i] . "+";
+
+        if ($useLatLon) {
+            $newString .= $this->lat . "," . $this->lon;
+        } else {
+            $array = explode(" ", $string);
+            for ($i = 0; $i < sizeof($array); $i++) {
+                if ($i == sizeof($array) - 1) $newString .= $array[$i];
+                else $newString .= $array[$i] . "+";
+            }
+
         }
         return $newString;
     }

@@ -9,12 +9,12 @@ class TwitterController extends Controller implements ModuleInterface
     {
         $string = "";
         $twitterAPI = new TwitterAPI($name, $limit);
-        $twitterContent = $twitterAPI->getContent(false, false, false);
+        $twitterContent = $twitterAPI->getContent(false, false, "recent");
 
         if (sizeof($twitterContent) > 0) {
-            $string = $message . $name . $this->getString($twitterContent);
+            $string = $message . $name . ": " . $this->getString($twitterContent);
         } else {
-            $string = "Could not pull from twitter";
+            $string = "Could not retrieve posts for the " . $name . "username. ";
         }
         return $string;
     }
@@ -23,8 +23,32 @@ class TwitterController extends Controller implements ModuleInterface
     {
         $string = "";
         for ($i = 0; $i < sizeof($array); $i++) {
-            $string .= $array[$i]->text . " ";
+            $string .= $this->cleanString($array[$i]->text) . " ";
         }
         return $string;
+    }
+
+    /**
+     * Rebuild string without url characters
+     *
+     * @param $url
+     * @return string
+     */
+    private function cleanString($url)
+    {
+        $stringArray = explode(" ", $url);
+        $newString = "";
+        foreach ($stringArray as $string) {
+            if (strpos($string, "http://") === false && strpos($string, "https://") === false) {
+                if(strpos($string, "#") !== false){
+                    $newString .= str_replace("#","", $string) . " ";
+                }
+                else{
+                    $newString .= $string . " ";
+                }
+            }
+        }
+
+        return $newString;
     }
 }

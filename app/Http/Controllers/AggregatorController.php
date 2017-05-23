@@ -50,7 +50,10 @@ class AggregatorController extends Controller
                     }
                     break;
                 case "twitter":
-
+                    foreach ($value as $subModule) {
+                        $twitterController = new TwitterController();
+                        $this->finalString .= $twitterController->execute($subModule->username, $subModule->amount, "Here are the twitter posts from ");
+                    }
                     break;
                 case "reddit":
                     foreach ($value as $subModule) {
@@ -71,7 +74,10 @@ class AggregatorController extends Controller
                     }
                     break;
                 case "traffic":
-
+                    foreach ($value as $subModule) {
+                        $trafficController = new TrafficController($moduleInfoDecoded->lat, $moduleInfoDecoded->lon, $subModule->list);
+                        $this->finalString .= $trafficController->execute($subModule->name, null, "Traffic: It will ");
+                    }
                     break;
                 default:
                     break;
