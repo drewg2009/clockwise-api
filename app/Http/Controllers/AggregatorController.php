@@ -19,8 +19,8 @@ class AggregatorController extends Controller
         foreach ($moduleInfoDecoded as $key => $value) {
             switch ($key) {
                 case "weather":
-//                    $weather = new WeatherController($moduleInfoDecoded->lat, $moduleInfoDecoded->lon, $value);
-//                    $weather->execute("",1,"");
+                    $weatherController = new WeatherController($moduleInfoDecoded->lat, $moduleInfoDecoded->lon, $value);
+                    $this->finalString .= $weatherController->execute(null,null,"Here is the weather for the ");
                     break;
                 case "tdih":
                     if ($value) {
@@ -84,25 +84,6 @@ class AggregatorController extends Controller
                     break;
             }
         }
-
-
-//        $redditController = new RedditController();
-//        $twitterController = new TwitterController();
-//        $countdownController = new CountdownController("March 16 2017");
-//
-//        $trafficController = new TrafficController("kent oh 44240", "columbus ohio", "driving");
-//
-//
-//        $this->finalString .= $redditController->execute("sports",3, "Here are the top reddit posts from ") . ". ";
-//        $this->finalString .= $history->execute(null, null, "Here is what happened on this day in history: ");
-//        //$this->finalString .= $weather->execute(null, null, "Weather:Here is the weather for the area: ");
-////        $this->finalString .= $newsController->execute("Sports", 3, "Here are the top news stories from ");
-////        $this->finalString .= $newsController->execute("Technology", 3, "Here are the top news stories from ");
-////        $this->finalString .= $newsController->execute("Elections", 3, "Here are the top news stories from ");
-////        $this->finalString .= $newsController->execute("Health", 3, "Here are the top news stories from ");
-////        $this->finalString .= $newsController->execute("Business", 3, "Here are the top news stories from ");
-////        $this->finalString .= $newsController->execute("Science", 3, "Here are the top news stories from ");
-//        $this->finalString .= $trafficController->execute(null, null, "It will take you ");
 
 
         echo $this->finalString;

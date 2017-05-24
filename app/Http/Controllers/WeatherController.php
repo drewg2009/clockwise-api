@@ -27,37 +27,45 @@ class WeatherController extends Controller implements ModuleInterface
     public function execute($name, $limit, $message)
     {
         $string = "";
-        $response  = file_get_contents($this->finalUrl2);
-        $jsonObj  = json_decode($response);
-//        dd($jsonObj);
-        $string  = $this->getString($jsonObj);
+        $response1  = file_get_contents($this->finalUrl1);
+        $response2 = file_get_contents($this->finalUrl2);
+        if($response1 && $response2) {
+            $currentTemp = (int)json_decode($response1)->main->temp;
+            $jsonObj = json_decode($response2);
+            $string = $message . $this->getString($jsonObj, $currentTemp);
+        }
+        else{
+            $string = "We were not able to pull your weather info at this time. ";
+        }
+
         return $string;
     }
 
-    private function getString($jsonObj)
+    private function getString($jsonObj, $currentTemp)
     {
-        $string = "Here is the weather for the " . $jsonObj->city->name . " area";
+        if(isset($jsonObj->city->name)) {
+            $string = $jsonObj->city->name . " area. ";
+        }
         if($this->info->description){
-
+            $string .= $jsonObj->list[0]->weather[0]->description . ". ";
         }
         if($this->info->currentTemp) {
-            $string .= "It is currently " . currentTemp . " degrees. ";
+            $string .= "It is currently " . $currentTemp . " degrees. ";
         }
-//        if(getMaxTemp) sb.append("The high today will be " + (int)maxTemp + " degrees. ");
-//        if(rain > 0 && snow > 0) sb.append("Expect rain and snow today. ");
-//        else if (rain > 0) sb.append("Expect rain today. ");
-//        else if (snow > 0) sb.append("Expect snow today. ");
+        if($this->info->maxTemp){
+            $string .= "The high today will be " . (int)$jsonObj->list[0]->temp->max . "degrees. ";
+        }
+        if(isset($jsonObj->list[0]->rain) && $jsonObj->list[0]->rain > 0 && isset($jsonObj->list[0]->snow) && $jsonObj->list[0]->snow > 0){
+            $string .= "Expect rain and snow today. ";
+        }
+        else if(isset($jsonObj->list[0]->rain) && $jsonObj->list[0]->rain > 0){
+            $string .= "Expect rain today. ";
+        }
+        else if(isset($jsonObj->list[0]->snow) && $jsonObj->list[0]->snow > 0){
+            $string .= "Expect snow today. ";
+        }
 
-
-//    {
-//    sb.append("Weather:Here is the weather for the " + locationName + " area. ");
-//        if(getDescription) sb.append(description + ". ");
-//        if(getCurrentTemp) sb.append("It is currently " + (int)currentTemp + " degrees. ");
-//        if(getMaxTemp) sb.append("The high today will be " + (int)maxTemp + " degrees. ");
-//        if(rain > 0 && snow > 0) sb.append("Expect rain and snow today. ");
-//        else if (rain > 0) sb.append("Expect rain today. ");
-//        else if (snow > 0) sb.append("Expect snow today. ");
-//        return sb.toString();
+        return $string;
 
     }
 
