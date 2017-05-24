@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 class TrafficController extends Controller implements ModuleInterface
 {
     private $url;
-    private $apiKey = "AIzaSyDTr4kNRhwbVgi7NFlNstgnuOUxcVFC3gs";
+    private $apiKey = "AIzaSyA_h2HbA5fjL3HVGr7Tqp8PqPIVPSMB1F8";
     private $origin;
     private $destination;
     private $mode;
@@ -27,22 +27,18 @@ class TrafficController extends Controller implements ModuleInterface
     {
         $useLatLon = $this->origin == null ? true : false;
 
-        $this->url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" .
+        $this->url = "https://maps.googleapis.com/maps/api/directions/json?origin=" .
             $this->formatLocationString($this->origin, $useLatLon)
-            . "&destinations=" . $this->formatLocationString($this->destination, false) . "&mode=" . $this->mode . "&key=" . $this->apiKey;
+            . "&destination=" . $this->formatLocationString($this->destination, false) . "&mode=" . $this->mode . "&key=" . $this->apiKey;
         $content = file_get_contents($this->url);
         $decodedContent = json_decode($content);
 
-        $string = "";
-        if($useLatLon){
-            $string ="";
+        if($decodedContent->status != "OK"){
+            return "We could not collect your traffic module info at this time.";
         }
         else{
-            $string = $message . $decodedContent->rows[0]->elements[0]->duration->text . " to travel fr"
-            . $this->origin . " to " . $this->destination . " by " . $this->mode . ".";
+            return $message . $decodedContent->routes[0]->legs[0]->duration->text . " to complete your " . $name . " trip. ";
         }
-        return $string;
-
     }
 
     private function formatLocationString($string, $useLatLon)

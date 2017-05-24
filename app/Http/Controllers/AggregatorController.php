@@ -75,8 +75,8 @@ class AggregatorController extends Controller
                     break;
                 case "traffic":
                     foreach ($value as $subModule) {
-                        $trafficController = new TrafficController($moduleInfoDecoded->lat, $moduleInfoDecoded->lon, $subModule->list);
-                        $this->finalString .= $trafficController->execute($subModule->name, null, "Traffic: It will ");
+                        $trafficController = new TrafficController($moduleInfoDecoded->lat, $moduleInfoDecoded->lon, $subModule);
+                        $this->finalString .= $trafficController->execute($subModule->name, null, "Traffic: It will take you ");
                     }
                     break;
 
