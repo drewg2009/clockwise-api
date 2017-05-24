@@ -19,8 +19,10 @@ class AggregatorController extends Controller
         foreach ($moduleInfoDecoded as $key => $value) {
             switch ($key) {
                 case "weather":
-                    $weatherController = new WeatherController($moduleInfoDecoded->lat, $moduleInfoDecoded->lon, $value);
-                    $this->finalString .= $weatherController->execute(null,null,"Here is the weather for the ");
+                    foreach ($value as $subModule) {
+                        $weatherController = new WeatherController($moduleInfoDecoded->lat, $moduleInfoDecoded->lon, $subModule);
+                        $this->finalString .= $weatherController->execute(null, null, "Here is the weather for the ");
+                    }
                     break;
                 case "tdih":
                     if ($value) {
