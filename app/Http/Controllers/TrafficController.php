@@ -34,7 +34,7 @@ class TrafficController extends Controller implements ModuleInterface
         $decodedContent = json_decode($content);
 
         if($decodedContent->status != "OK"){
-            return "We could not collect your traffic module info at this time.";
+            return "Clockwise could not retrieve your traffic module info. ";
         }
         else{
             return $message . $decodedContent->routes[0]->legs[0]->duration->text . " to complete your " . $name . " trip. ";

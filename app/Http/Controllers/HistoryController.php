@@ -21,10 +21,15 @@ class HistoryController extends Controller implements ModuleInterface
     public function execute($name, $limit, $message)
     {
         $content  = file_get_contents($this->url);
-        $jsonObj = json_decode($content);
-        $randRange = sizeof($jsonObj->data->Events) - 1; //index starts at 0
-        $index = rand(0, $randRange);
-        return $message . " " . $jsonObj->data->Events[$index]->text;
+        if($content) {
+            $jsonObj = json_decode($content);
+            $randRange = sizeof($jsonObj->data->Events) - 1; //index starts at 0
+            $index = rand(0, $randRange);
+            return $message . " " . $jsonObj->data->Events[$index]->text;
+        }
+        else{
+            return "Clockwise could not retrieve your history module info. ";
+        }
     }
 
 

@@ -14,8 +14,13 @@ class RedditController extends Controller implements ModuleInterface
 
         $finalUrl = $this->url . $name . $this->ext;
         $xmlObject = XMLParserController::get_rss_item($finalUrl, $limit);
+        if($xmlObject){
+            return $message . $name . ". " . $this->getString($xmlObject);
+        }
+        else{
+            return "Clockwise could not retrieve your reddit post info. ";
+        }
 
-        return $message . $name . ". " . $this->getString($xmlObject);
     }
 
     private function getString($array){

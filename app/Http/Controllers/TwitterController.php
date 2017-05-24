@@ -14,7 +14,7 @@ class TwitterController extends Controller implements ModuleInterface
         if (sizeof($twitterContent) > 0) {
             $string = $message . $name . ": " . $this->getString($twitterContent);
         } else {
-            $string = "Could not retrieve posts for the " . $name . " username";
+            $string = "Clockwise could not retrieve twitter posts for the " . $name . " username. ";
         }
         return $string;
     }

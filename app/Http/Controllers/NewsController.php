@@ -29,7 +29,12 @@ class NewsController extends Controller implements ModuleInterface
     {
         $this->url = $this->linksArray[$name];
         $xmlObject = XMLParserController::get_rss_item($this->url, $limit);
-        return $message . $name . ". " . $this->getString($xmlObject);
+        if($xmlObject){
+            return $message . $name . ". " . $this->getString($xmlObject);
+        }
+        else{
+            return "Clockwise could not retrieve your news module info. ";
+        }
     }
 
     private function getString($array)

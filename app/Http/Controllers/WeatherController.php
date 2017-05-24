@@ -35,7 +35,7 @@ class WeatherController extends Controller implements ModuleInterface
             $string = $message . $this->getString($jsonObj, $currentTemp);
         }
         else{
-            $string = "We were not able to pull your weather info at this time. ";
+            $string = "Clockwise could not retrieve your weather info at this time. ";
         }
 
         return $string;

@@ -11,6 +11,12 @@ class QuoteController extends Controller implements ModuleInterface
 
     public function execute($name, $limit, $message){
         $xmlObject = XMLParserController::get_rss_item($this->url, 1);
-        return strip_tags($message . $xmlObject[0]->description);
+        if($xmlObject) {
+            return strip_tags($message . $xmlObject[0]->description);
+        }
+        else{
+            return "Clockwise could not retrieve your quote of the day info. ";
+        }
+
     }
 }
