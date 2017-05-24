@@ -43,8 +43,9 @@ class WeatherController extends Controller implements ModuleInterface
 
     private function getString($jsonObj, $currentTemp)
     {
+        $string = "";
         if(isset($jsonObj->city->name)) {
-            $string = $jsonObj->city->name . " area. ";
+            $string .= $jsonObj->city->name . " area. ";
         }
         if($this->info->description){
             $string .= $jsonObj->list[0]->weather[0]->description . ". ";
