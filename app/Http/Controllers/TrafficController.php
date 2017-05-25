@@ -25,7 +25,7 @@ class TrafficController extends Controller implements ModuleInterface
 
     public function execute($name, $limit, $message)
     {
-        $useLatLon = $this->origin == null ? true : false;
+        $useLatLon = $this->origin == "null" ? true : false;
 
         $this->url = "https://maps.googleapis.com/maps/api/directions/json?origin=" .
             $this->formatLocationString($this->origin, $useLatLon)
