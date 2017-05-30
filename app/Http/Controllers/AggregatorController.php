@@ -14,7 +14,6 @@ class AggregatorController extends Controller
 
     public function executeAll(Request $request)
     {
-
         $moduleInfoDecoded = json_decode($request->moduleInfo);
         foreach ($moduleInfoDecoded as $key => $value) {
             switch ($key) {
@@ -88,6 +87,32 @@ class AggregatorController extends Controller
         }
 
 
-        echo $this->finalString;
+
+        $awsAccessKeyId = 'AKIAI6KMEBP6U7WOPWHA';
+        $awsSecretKey = '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';
+        $credentials = new \Aws\Credentials\Credentials($awsAccessKeyId, $awsSecretKey);
+        $client = new \Aws\Polly\PollyClient([
+            'version' => '2016-06-10',
+            'credentials' => $credentials,
+            'region' => 'us-east-1',
+        ]);
+        $result = $client->synthesizeSpeech([
+            'OutputFormat' => 'mp3',
+            'Text' => $this->finalString,
+            'TextType' => 'text',
+            'VoiceId' => 'Joanna',
+        ]);
+        $resultData = $result->get('AudioStream')->getContents();
+
+
+//        header('Content-Transfer-Encoding: binary');
+//        header('Content-Type: audio/mpeg, audio/x-mpeg, audio/x-mpeg-3, audio/mpeg3');
+//        header('Content-length: ' . strlen($resultData));
+//        header('Content-Disposition: attachment; filename="pollyTTS.mp3"');
+//        header('X-Pad: avoid browser bug');
+//        header('Cache-Control: no-cache');
+
+        echo base64_encode($resultData);
+
     }
 }
