@@ -16,4 +16,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('get/moduleData', 'AggregatorController@executeAll');
+Route::post('get/moduleData', 'AggregatorController@executeAll');
