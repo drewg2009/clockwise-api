@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 class AggregatorController extends Controller
 {
     private $finalString = "";
+    private $introMessage = "Hello. Clockwise is collecting your module info. Please wait one moment. ";
+    private $errorMessage = "Clockwise could not load your module information at this time. Please try again later. ";
 
     public function __construct()
     {
@@ -96,13 +98,36 @@ class AggregatorController extends Controller
             'credentials' => $credentials,
             'region' => 'us-east-1',
         ]);
-        $result = $client->synthesizeSpeech([
+
+        $speechArray = array();
+
+        $contentResult = $client->synthesizeSpeech([
             'OutputFormat' => 'mp3',
             'Text' => $this->finalString,
             'TextType' => 'text',
             'VoiceId' => 'Joanna',
         ]);
-        $resultData = $result->get('AudioStream')->getContents();
+
+
+        $errorResult = $client->synthesizeSpeech([
+            'OutputFormat' => 'mp3',
+            'Text' => $this->errorMessage,
+            'TextType' => 'text',
+            'VoiceId' => 'Joanna',
+        ]);
+
+        $introResult = $client->synthesizeSpeech([
+            'OutputFormat' => 'mp3',
+            'Text' => $this->introMessage,
+            'TextType' => 'text',
+            'VoiceId' => 'Joanna',
+        ]);
+
+
+        array_push($speechArray, base64_encode($contentResult->get('AudioStream')->getContents()));
+        array_push($speechArray, base64_encode($errorResult->get('AudioStream')->getContents()));
+        array_push($speechArray, base64_encode($introResult->get('AudioStream')->getContents()));
+
 
 
 //        header('Content-Transfer-Encoding: binary');
@@ -112,7 +137,6 @@ class AggregatorController extends Controller
 //        header('X-Pad: avoid browser bug');
 //        header('Cache-Control: no-cache');
 
-        echo base64_encode($resultData);
-
+        echo json_encode($speechArray);
     }
 }
