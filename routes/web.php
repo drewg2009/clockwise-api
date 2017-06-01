@@ -17,5 +17,5 @@ Route::get('/', function () {
 });
 
 Route::post('get/moduleData', 'AggregatorController@executeAll');
-Route::get('get/introMessage', 'AmazonPollyController@getIntroMessage');
-Route::get('get/errorMessage','AmazonPollyController@getErrorMessage');
+Route::post('get/introMessage', 'AmazonPollyController@getIntroMessage');
+Route::post('get/errorMessage','AmazonPollyController@getErrorMessage');
