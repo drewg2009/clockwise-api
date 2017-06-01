@@ -6,9 +6,6 @@ use Illuminate\Http\Request;
 
 class HistoryController extends Controller implements ModuleInterface
 {
-    //private  $url = "http://www.infoplease.com/rss/dayinhistory.rss";
-    //private $url = "http://feeds.feedburner.com/historyorb/todayinhistory?format=xml";
-    //private $url ="http://www.history.com/this-day-in-history/rss";
     private $url = "http://history.muffinlabs.com/date";
     private $date;
 
@@ -25,7 +22,7 @@ class HistoryController extends Controller implements ModuleInterface
             $jsonObj = json_decode($content);
             $randRange = sizeof($jsonObj->data->Events) - 1; //index starts at 0
             $index = rand(0, $randRange);
-            return $message . " " . $jsonObj->data->Events[$index]->text;
+            return $message . " in the year " . $jsonObj->data->Events[$index]->year . ", " . $jsonObj->data->Events[$index]->text;
         }
         else{
             return "Clockwise could not retrieve your history module info. ";
