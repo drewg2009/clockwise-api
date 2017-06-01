@@ -7,8 +7,6 @@ use Illuminate\Http\Request;
 class AggregatorController extends Controller
 {
     private $finalString = "";
-    private $introMessage = "Hello. Clockwise is collecting your module info. Please wait one moment. ";
-    private $errorMessage = "Clockwise could not load your module information at this time. Please try again later. ";
 
     public function __construct()
     {
@@ -88,55 +86,8 @@ class AggregatorController extends Controller
             }
         }
 
+        $polly = new AmazonPollyController();
+        echo $polly->getSpeech("Joanna", $this->finalString);
 
-
-        $awsAccessKeyId = 'AKIAI6KMEBP6U7WOPWHA';
-        $awsSecretKey = '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';
-        $credentials = new \Aws\Credentials\Credentials($awsAccessKeyId, $awsSecretKey);
-        $client = new \Aws\Polly\PollyClient([
-            'version' => '2016-06-10',
-            'credentials' => $credentials,
-            'region' => 'us-east-1',
-        ]);
-
-        $speechArray = array();
-
-        $contentResult = $client->synthesizeSpeech([
-            'OutputFormat' => 'mp3',
-            'Text' => $this->finalString,
-            'TextType' => 'text',
-            'VoiceId' => 'Joanna',
-        ]);
-
-
-        $errorResult = $client->synthesizeSpeech([
-            'OutputFormat' => 'mp3',
-            'Text' => $this->errorMessage,
-            'TextType' => 'text',
-            'VoiceId' => 'Joanna',
-        ]);
-
-        $introResult = $client->synthesizeSpeech([
-            'OutputFormat' => 'mp3',
-            'Text' => $this->introMessage,
-            'TextType' => 'text',
-            'VoiceId' => 'Joanna',
-        ]);
-
-
-        array_push($speechArray, base64_encode($contentResult->get('AudioStream')->getContents()));
-        array_push($speechArray, base64_encode($errorResult->get('AudioStream')->getContents()));
-        array_push($speechArray, base64_encode($introResult->get('AudioStream')->getContents()));
-
-
-
-//        header('Content-Transfer-Encoding: binary');
-//        header('Content-Type: audio/mpeg, audio/x-mpeg, audio/x-mpeg-3, audio/mpeg3');
-//        header('Content-length: ' . strlen($resultData));
-//        header('Content-Disposition: attachment; filename="pollyTTS.mp3"');
-//        header('X-Pad: avoid browser bug');
-//        header('Cache-Control: no-cache');
-
-        echo json_encode($speechArray);
     }
 }
