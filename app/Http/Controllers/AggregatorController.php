@@ -65,7 +65,7 @@ class AggregatorController extends Controller
                 case "countdown":
                     foreach ($value as $subModule) {
                         $countdownController = new CountdownController($subModule->date);
-                        $this->finalString .= $countdownController->execute($subModule->event, null, "Countdown: ");
+                        $this->finalString .= $countdownController->execute($subModule->eventName, null, "Countdown: ");
                     }
                     break;
                 case "reminders":
