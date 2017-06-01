@@ -18,9 +18,9 @@ class CountdownController extends Controller implements ModuleInterface
     public function execute($name, $limit, $message)
     {
         $daysUntil = $this->getDaysUntil();
-        if ($daysUntil == 0) return $message .= "Countdown for $name has been reached.";
-        else if ($daysUntil == 1) return $message .= "There is $daysUntil day until $name.";
-        else return $message .= "There are $daysUntil days until $name.";
+        if ($daysUntil == 0) return $message .= "Countdown for $name has been reached. ";
+        else if ($daysUntil == 1) return $message .= "There is $daysUntil day until $name. ";
+        else return $message .= "There are $daysUntil days until $name. ";
 
     }
 
@@ -29,7 +29,7 @@ class CountdownController extends Controller implements ModuleInterface
         $now = strtotime(date('F D Y')) * 1000;
         $eventMs = strtotime($this->eventDate) * 1000;
         $msDiff = $eventMs - $now;
-        return ceil($msDiff * .0000000115741);
+        return (int)ceil($msDiff * .0000000115741);
     }
 
 
