@@ -12,6 +12,23 @@ class GooglePlacesController extends Controller
         $placesUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
         $textSearchUrl = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=";
         $result = file_get_contents($textSearchUrl . $request->placesQuery . "&key=" . $placesApiKey);
-        echo $result;
+        echo $this->formatLocationString($result, false);
+    }
+
+    private function formatLocationString($string, $useLatLon)
+    {
+        $newString = "";
+
+        if ($useLatLon) {
+            $newString .= $this->lat . "," . $this->lon;
+        } else {
+            $array = explode(" ", $string);
+            for ($i = 0; $i < sizeof($array); $i++) {
+                if ($i == sizeof($array) - 1) $newString .= $array[$i];
+                else $newString .= $array[$i] . "+";
+            }
+
+        }
+        return $newString;
     }
 }
