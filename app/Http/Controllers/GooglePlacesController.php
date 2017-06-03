@@ -20,7 +20,7 @@ class GooglePlacesController extends Controller
         $newString = "";
 
         if ($useLatLon) {
-            $newString .= $this->lat . "," . $this->lon;
+            //$newString .= $this->lat . "," . $this->lon;
         } else {
             $array = explode(" ", $string);
             for ($i = 0; $i < sizeof($array); $i++) {
