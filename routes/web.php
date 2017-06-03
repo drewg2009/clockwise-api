@@ -19,3 +19,4 @@ Route::get('/', function () {
 Route::post('get/moduleData', 'AggregatorController@executeAll');
 Route::post('get/introMessage', 'AmazonPollyController@getIntroMessage');
 Route::post('get/errorMessage','AmazonPollyController@getErrorMessage');
+Route::post('get/nearbyLocations','GooglePlacesController@getNearbyLocations');
