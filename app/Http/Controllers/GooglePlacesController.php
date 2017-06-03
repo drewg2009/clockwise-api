@@ -11,8 +11,8 @@ class GooglePlacesController extends Controller
         $placesApiKey = "AIzaSyCCb7yaagbE_5Gujv9U5AQOYlVXF-R-QMo";
         $placesUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
         $textSearchUrl = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=";
-        $result = file_get_contents($textSearchUrl . $request->placesQuery . "&key=" . $placesApiKey);
-        echo $this->formatLocationString($result, false);
+        $result = file_get_contents($textSearchUrl . $this->formatLocationString($request->placesQuery,false) . "&key=" . $placesApiKey);
+        echo $result;
     }
 
     private function formatLocationString($string, $useLatLon)
