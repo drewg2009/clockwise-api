@@ -14,7 +14,7 @@ class AmazonPollyController extends Controller
     private $awsAccessKeyId;
     private $awsSecretKey;
     private $credentials;
-    private $client;
+    public $client;
 
     public function  __construct()
     {
@@ -48,5 +48,7 @@ class AmazonPollyController extends Controller
         $errorMessage = "Clockwise could not load your module information at this time. Please try again later. ";
         echo $this->getSpeech("Joanna", $errorMessage);
     }
+
+
 
 }

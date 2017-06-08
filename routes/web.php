@@ -15,6 +15,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('get/allVoices','VoiceController@getAllVoices');
+
+
 
 Route::post('get/moduleData', 'AggregatorController@executeAll');
 Route::post('get/introMessage', 'AmazonPollyController@getIntroMessage');
